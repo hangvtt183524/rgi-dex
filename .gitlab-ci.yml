@@ -1,0 +1,90 @@
+variables:
+  PROJECT_NAME: robo-dex
+  DOCKER_REGISTRY: 775597531690.dkr.ecr.us-east-1.amazonaws.com
+  ORGANIZATION: robo
+  IMAGE_URL: $DOCKER_REGISTRY/$ORGANIZATION/$PROJECT_NAME
+
+stages:
+  - lint
+  - build
+  - deploy
+
+.unstable_template: &unstable_template
+  tags:
+    - robo
+  only:
+    - _unstable
+
+.staging_template: &staging_template
+  tags:
+    - robo
+  only:
+    - staging
+
+.production_template: &production_template
+  tags:
+    - robo
+  only:
+    - _master
+
+.base_build_stage:
+  stage: build
+  script:
+    - docker build -t $PROJECT_NAME:$IMAGE_TAG -t $PROJECT_NAME:$LATEST_TAG --file=Dockerfile .
+
+    # remove old images version keep 2 version
+    - docker images | egrep -e "$PROJECT_NAME" | tail -n +3 | awk '{print $3}' | xargs -r docker rmi -f || echo 'Ignore'
+  variables:
+    IMAGE_TAG: staging.$CI_PIPELINE_ID
+    LATEST_TAG: staging
+
+.base_deploy_stage:
+  stage: deploy
+  script:
+    - docker run --rm -v /tmp/$PROJECT_NAME/$IMAGE_TAG:/output $PROJECT_NAME:$IMAGE_TAG sh -c "rm -rf /output/* && cp -r out/. /output"
+    - aws s3 sync /tmp/$PROJECT_NAME/$IMAGE_TAG $S3_BUCKET --delete
+    - aws cloudfront create-invalidation --distribution-id=${DISTRIBUTION_ID} --paths '/*'
+
+  variables:
+    IMAGE_TAG: staging.$CI_PIPELINE_ID
+    S3_BUCKET: s3://staging.rbif.tech
+    DISTRIBUTION_ID: xxxyyy
+
+# CI for staging
+# -------------------------------------------------------------------------------
+build_staging:
+  <<: *staging_template
+  extends: .base_build_stage
+  variables:
+    IMAGE_TAG: staging.$CI_PIPELINE_ID
+    LATEST_TAG: staging
+
+deploy_staging:
+  <<: *staging_template
+  extends: .base_deploy_stage
+  variables:
+    IMAGE_TAG: staging.$CI_PIPELINE_ID
+    S3_BUCKET: s3://robo-staging-dex-website/
+    DISTRIBUTION_ID: E2HO98VOTG82PE
+  environment:
+    name: staging
+    url: https://dex-staging.rbif.tech
+
+# CI for production
+# -------------------------------------------------------------------------------
+build_production:
+  <<: *production_template
+  extends: .base_build_stage
+  variables:
+    IMAGE_TAG: prod.$CI_PIPELINE_ID
+    LATEST_TAG: prod
+
+deploy_production:
+  <<: *production_template
+  extends: .base_deploy_stage
+  variables:
+    IMAGE_TAG: prod.$CI_PIPELINE_ID
+    S3_BUCKET: s3://robo-prod-dex-website/
+  environment:
+    name: production
+    url: https://dashboard.roboglobal.info
