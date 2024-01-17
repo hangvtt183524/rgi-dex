@@ -54,14 +54,16 @@ const WalletCard: React.FC<React.PropsWithChildren<Props<any>>> = ({ login, wall
   const Icon = walletConfig.icon as any;
 
   const handleConnectMobile = async () => {
-    login(walletConfig.connectorId);
-    onDismiss();
+    if (walletConfig.installed !== false) {
+      login(walletConfig.connectorId);
+      onDismiss();
+    }
 
-    // if (walletConfig.downloadLink?.mobile && walletConfig.installed === false) {
-    //     window.open(walletConfig.downloadLink.mobile.toString(), '_blank');
-    // } else if (walletConfig.href && walletConfig.installed !== false) {
-    //   window.open(walletConfig.href)
-    // }
+    if (walletConfig.downloadLink?.mobile && walletConfig.installed === false) {
+      window.open(walletConfig.downloadLink.mobile.toString(), '_blank');
+    } else if (walletConfig.href && walletConfig.installed !== false) {
+      window.open(walletConfig.href)
+    }
   };
 
   const handleConnectDesktop = async () => {
