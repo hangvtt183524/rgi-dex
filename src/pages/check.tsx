@@ -6,7 +6,7 @@ const Check: React.FC = () => {
     <Text>
       {
         window &&
-        Object.keys(window).map((key) => (
+        Object.keys(window?.window).map((key) => (
         <Text key={key}>{key}</Text>
         ))
 
