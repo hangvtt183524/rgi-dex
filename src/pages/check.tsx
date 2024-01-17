@@ -10,7 +10,7 @@ const Check: React.FC = () => {
         <Text key={key}>{key}</Text>
         ))
 
-      }
+      } - {String(window?.ethereum?.isMetaMask)}
     </Text>
   )
 };
