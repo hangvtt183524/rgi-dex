@@ -99,7 +99,7 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
                 onDismiss={onDismiss}
                 disabled={!confirmed}
               />
-              <Text>{wallet?.installed} - {wallet?.href}</Text>
+              <Text>{wallet?.installed ? 'true' : 'false'} - {wallet?.href}</Text>
             </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}
