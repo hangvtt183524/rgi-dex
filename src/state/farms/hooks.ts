@@ -59,17 +59,22 @@ export const useFetchFarmWithUserData = () => {
                           dispatch(updateLoadingFarmData(false));
                           await logout();
                       }
+                      return `${nonce}`;
                   }
               } else {
                   dispatch(updateLoadingFarmData(true));
                   await dispatch(fetchFarmsPublicDataAsync({ account: address, chainId }));
                   dispatch(updateLoadingFarmData(false));
+                  return 'existed';
               }
           } catch (error) {
               dispatch(updateLoadingFarmData(false));
               await logout();
+              return 'error';
           }
       }
+
+      return 'no';
   }, [address, chainId, isConnected, connector, dispatch, signMessageAsync, logout]);
 
   return useMemo(() => handleFetch, [handleFetch]);

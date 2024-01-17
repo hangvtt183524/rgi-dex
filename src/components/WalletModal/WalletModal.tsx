@@ -104,7 +104,6 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
                 onDismiss={onDismiss}
                 disabled={!confirmed}
               />
-              <Text>{window.roboinu ? 'true' : 'false'} - {window?.roboinu?.providers ? 'true' : 'false'}</Text>
             </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}

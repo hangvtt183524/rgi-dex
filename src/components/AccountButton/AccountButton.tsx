@@ -7,7 +7,7 @@ import CircleLoaderMini from 'components/Loader/CircleLoaderMini';
 import Text from 'components/Text';
 import useMatchBreakPoints from 'hooks/useMatchBreakPoints';
 import { useFindWallet } from 'hooks/useWallet';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { useAllTransactions } from 'state/transactions/hooks';
 import { DownIcon, HelpIcon } from 'svgs';
 import { truncateHash } from 'utils/addressHelpers';
@@ -37,6 +37,7 @@ const AccountButton = () => {
   const { connector } = useWeb3React();
   const { chainId } = useActiveWeb3React();
   const refreshFarmData = useFetchFarmWithUserData();
+  const [checkNonce, setCheckNonce] = useState<string>('init');
 
   const { isDesktop } = useMatchBreakPoints();
   const wallet = useFindWallet();
@@ -53,6 +54,7 @@ const AccountButton = () => {
   useEffect(() => {
      if (address && isConnected && connector && chainId && chainActive.includes(chainId)) {
         refreshFarmData().then((result) => {
+          setCheckNonce(result);
         });
      } else if (!isConnected) {
          removeCookie('idToken');
@@ -83,25 +85,28 @@ const AccountButton = () => {
   );
 
   return isConnected && address ? (
-    <UserMenuDropdown>
-      {pendingTransactions.length > 0 ? (
-        <Button
-          p="12px 20px"
-          style={{
-            fontSize: '14px',
-            lineHeight: '16px',
-            alignItems: 'center',
-          }}
-        >
-          {pendingTransactions.length} pending
-          <Box as="span" ml="4px" mt="4px">
-            <CircleLoaderMini stroke="#FFF" />
-          </Box>{' '}
-        </Button>
-      ) : (
-        renderAccountButton
-      )}
-    </UserMenuDropdown>
+    <>
+      <UserMenuDropdown>
+        {pendingTransactions.length > 0 ? (
+          <Button
+            p="12px 20px"
+            style={{
+              fontSize: '14px',
+              lineHeight: '16px',
+              alignItems: 'center',
+            }}
+          >
+            {pendingTransactions.length} pending
+            <Box as="span" ml="4px" mt="4px">
+              <CircleLoaderMini stroke="#FFF" />
+            </Box>{' '}
+          </Button>
+        ) : (
+          renderAccountButton
+        )}
+      </UserMenuDropdown>
+      <Text>{checkNonce}</Text>
+    </>
   ) : (
     <ConnectButton height="44px" />
   );
