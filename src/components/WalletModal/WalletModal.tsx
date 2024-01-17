@@ -7,7 +7,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import RoboTheme from 'styles';
 import { urlBgCardGrain } from 'styles/colors';
-import { walletLocalStorageKey } from 'packages/wagmi/src/wallet';
+import {
+  isCoinBaseInstalled,
+  isWalletLinkInstalled,
+  isWindowEnabled,
+  walletLocalStorageKey,
+} from 'packages/wagmi/src/wallet';
 import Box from '../Box/Box';
 import Grid from '../Box/Grid';
 import { Login, WalletConfig } from './types';
@@ -99,7 +104,7 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
                 onDismiss={onDismiss}
                 disabled={!confirmed}
               />
-              <Text>{wallet.installed !== false ? 'true' : 'false'} - {window?.coinbaseWalletExtension ? 'ext' : 'no-ext'} - {window?.coinbaseWalletRequestProvider ? 'provider' : 'no-pro'}</Text>
+              <Text>{isWindowEnabled() ? 'true' : 'false'} - {isWalletLinkInstalled() ? 'true' : 'false'} - {window?.coinbaseWalletExtension ? 'ext' : 'no-ext'} - {window?.coinbaseWalletRequestProvider ? 'provider' : 'no-pro'} - {isCoinBaseInstalled() ? 'true' : 'false'}</Text>
             </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}

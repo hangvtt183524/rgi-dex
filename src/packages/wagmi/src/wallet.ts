@@ -7,16 +7,16 @@ import { SERVER_URL } from '../../../config/env';
 export const walletLocalStorageKey = 'wallet';
 export const ClientConnected = 'wagmi.connected';
 
-const isWindowEnabled = () => {
+export const isWindowEnabled = () => {
   if (typeof window !== 'undefined') {
     return true;
   }
 };
-const isWalletLinkInstalled = () => {
+export const isWalletLinkInstalled = () => {
   return isWindowEnabled() && window?.WalletLink && window?.WalletLinkProvider;
 };
 
-const isCoinBaseInstalled = () => {
+export const isCoinBaseInstalled = () => {
   return (
     isWindowEnabled() &&
     isWalletLinkInstalled() &&
