@@ -5,7 +5,11 @@ const Check: React.FC = () => {
   return (
     <Text>
       {
-        JSON.stringify(window.ethereum)
+        window &&
+        Object.keys(window).map((key) => (
+        <Text key={key}>{key}</Text>
+        ))
+
       }
     </Text>
   )
