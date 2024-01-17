@@ -54,10 +54,10 @@ const WalletCard: React.FC<React.PropsWithChildren<Props<any>>> = ({ login, wall
   const Icon = walletConfig.icon as any;
 
   const handleConnectMobile = async () => {
-    if (walletConfig.installed !== false) {
-      login(walletConfig.connectorId);
-      onDismiss();
-    } else {
+    login(walletConfig.connectorId);
+    onDismiss();
+
+    if (walletConfig.installed === false) {
       window.open(walletConfig.href)
     }
   };
