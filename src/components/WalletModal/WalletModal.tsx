@@ -104,7 +104,7 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
                 onDismiss={onDismiss}
                 disabled={!confirmed}
               />
-              <Text>{isWalletLinkInstalled() ? 'true' : 'false'} - {window?.coinbaseWalletExtension ? 'ext' : 'no-ext'} - {window?.coinbaseWalletRequestProvider ? 'provider' : 'no-pro'} - {isCoinBaseInstalled() !== false ? 'true' : 'false'}</Text>
+              <Text>{isWalletLinkInstalled() ? 'true' : 'false'} - {window?.coinbaseWalletExtension ? 'ext' : 'no-ext'} - {window?.coinbaseWalletRequestProvider ? 'provider' : 'no-pro'} - {String(isCoinBaseInstalled())}</Text>
             </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}
