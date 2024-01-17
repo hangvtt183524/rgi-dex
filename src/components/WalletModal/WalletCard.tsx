@@ -57,11 +57,7 @@ const WalletCard: React.FC<React.PropsWithChildren<Props<any>>> = ({ login, wall
     if (walletConfig.installed !== false) {
       login(walletConfig.connectorId);
       onDismiss();
-    }
-
-    if (walletConfig.downloadLink?.mobile && walletConfig.installed === false) {
-      window.open(walletConfig.downloadLink.mobile.toString(), '_blank');
-    } else if (walletConfig.href && walletConfig.installed !== false) {
+    } else {
       window.open(walletConfig.href)
     }
   };
