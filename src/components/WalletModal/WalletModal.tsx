@@ -104,7 +104,7 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
                 onDismiss={onDismiss}
                 disabled={!confirmed}
               />
-              <Text>{wallet.connectorId}</Text>
+              <Text>{String(wallet.connectorId)}</Text>
             </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}
