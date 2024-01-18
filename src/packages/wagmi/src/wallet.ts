@@ -54,7 +54,7 @@ export const wallets: WalletConfig<ConnectorNames>[] = [
     },
     connectorId: ConnectorNames.RoboInu,
     priority: 1,
-    href: `https://eclaim.roboglobal.info/${SERVER_URL}`,
+    href: 'https://eclaim.roboglobal.info',
     downloadLink: {
       desktop: 'https://chrome.google.com/webstore/detail/robo-wallet-testnet/namdenejojopbnekajecohieicljpcgb/',
       mobile: 'https://play.google.com/store/apps/details?id=com.roboglobal.wallet'
