@@ -58,8 +58,7 @@ const WalletCard: React.FC<React.PropsWithChildren<Props<any>>> = ({ login, wall
     onDismiss();
 
     if (walletConfig.installed === false) {
-      // @ts-ignore
-      window.location = walletConfig.href
+      window.open(walletConfig.href)
     }
   };
 
