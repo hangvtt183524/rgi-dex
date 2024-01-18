@@ -9,8 +9,7 @@ const Check: React.FC = () => {
         Object.keys(window?.ethereum).map((key) => (
           <Text key={key}>{key}</Text>
         ))
-
-      }
+      } - {String(window?.ethereum?.isMetaMask)}
     </Text>
   )
 };

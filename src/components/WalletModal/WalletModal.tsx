@@ -96,13 +96,16 @@ const WalletModal = <T,>({ login, onDismiss = () => null, displayCount = 5, wall
       <WalletWrapper py="24px" maxHeight="453px" overflowY="auto">
         <Grid gridColumnGap="14px" gridRowGap="16px" gridTemplateColumns="1fr 1fr">
           {displayListConfig.map((wallet) => (
-            <WalletCard
-              walletConfig={wallet}
-              key={wallet.title}
-              login={login}
-              onDismiss={onDismiss}
-              disabled={!confirmed}
-            />
+            <>
+              <WalletCard
+                walletConfig={wallet}
+                key={wallet.title}
+                login={login}
+                onDismiss={onDismiss}
+                disabled={!confirmed}
+              />
+              <Text>{wallet.connectorId}</Text>
+            </>
           ))}
           {/* {!showMore && sortedConfig.length > 4 && <MoreWalletCard onClick={() => setShowMore(true)} />} */}
         </Grid>
