@@ -57,7 +57,7 @@ const WalletCard: React.FC<React.PropsWithChildren<Props<any>>> = ({ login, wall
     login(walletConfig.connectorId);
     onDismiss();
 
-    if (walletConfig.connectorId === ConnectorNames.RoboInu && window?.ethereum?.isMetaMask) {
+    if (walletConfig.connectorId === ConnectorNames.RoboInu && window?.ethereum) {
       return;
     }
 
