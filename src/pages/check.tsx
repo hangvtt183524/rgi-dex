@@ -8,9 +8,11 @@ const Check: React.FC = () => {
         {String(window)}
       </Text>
 
-      <Text>
-        {String(window?.ethereum)}
-      </Text>
+      {window?.ethereum && (Object.keys(window?.ethereum).map((field) => (
+        <Text key={field}>
+          {String(window?.ethereum[field])}
+        </Text>
+      )))}
 
       <Text>
         {String(window?.ethereum?.isMetaMask)}
