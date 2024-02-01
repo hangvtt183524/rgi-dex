@@ -3,9 +3,19 @@ import Text from 'components/Text';
 
 const Check: React.FC = () => {
   return (
-    <Text>
-      {String(window?.ethereum?.isMetaMask)}
-    </Text>
+    <div>
+      <Text>
+        {String(window)}
+      </Text>
+
+      <Text>
+        {String(window?.ethereum)}
+      </Text>
+
+      <Text>
+        {String(window?.ethereum?.isMetaMask)}
+      </Text>
+    </div>
   )
 };
 
